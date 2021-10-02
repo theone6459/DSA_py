@@ -1,0 +1,85 @@
+'''
+author:"Pradhyumna Singh Rathore"
+'''
+mod=1000000007
+from math import floor, sqrt
+def sieve_of_erathosthenes(n):
+    l=[True]*(n+1)
+    ans=[]
+    p=2
+    while p*p<=n:
+        if l[p]==True:
+            for i in range(p*p,n+1,p):
+                l[i]=False
+    for i in l:
+        if i:
+            ans.append(i)
+    return ans
+
+
+
+
+def simpleSieve(limit, primes):
+    mark = [False] * (limit + 1)
+
+    for i in range(2, limit + 1):
+        if not mark[i]:
+            # If not marked yet, then its a prime
+            primes.append(i)
+            for j in range(i, limit + 1, i):
+                mark[j] = True
+
+
+def primesInRange(low, high):
+    limit = floor(sqrt(high)) + 1
+    primes = list()
+    simpleSieve(limit, primes)
+    n = high - low + 1
+    mark = [False] * (n + 1)
+    for i in range(len(primes)):
+        loLim = floor(low / primes[i]) * primes[i]
+        if loLim < low:
+            loLim += primes[i]
+        if loLim == primes[i]:
+            loLim += primes[i]
+        for j in range(loLim, high + 1, primes[i]):
+            mark[j - low] = True
+    for i in range(low, high + 1):
+        if not mark[i - low]:
+            print(i, end=" ")
+
+
+def modulo_expo(x,y,p):
+    if y==0:
+        return 1
+    res=1
+    while y>0:
+        if y&1==1:
+            res=(res*x)%p
+        y=y>>1
+        x=(x*x)%p
+    return res
+
+def gcd(a,b):
+    if b==0:
+        return a
+    else:
+        return gcd(b,a%b)
+
+def extented_euclide(a,b):
+    if a==0:
+        return b,0,1
+    else:
+        gcd,x1,y1=extented_euclide(b%a,a)
+        x=y1-(b//a)*x1
+        y=x1
+
+        return gcd,x,y
+
+def fib(n):
+    phi = ((1 + (5 ** (1 / 2))) / 2)
+    return round((phi ** n) / (5 ** (1 / 2)))
+
+def algo(n):
+    res = (((1 + sqrt(5)) ** n) - ((1 - sqrt(5))) ** n) / (2 ** n * sqrt(5))
+    return int(res)
